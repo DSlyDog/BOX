@@ -1,0 +1,33 @@
+package net.whispwriting.commands;
+
+import net.dv8tion.jda.api.entities.Member;
+import net.dv8tion.jda.api.entities.User;
+import net.dv8tion.jda.api.events.message.guild.GuildMessageReceivedEvent;
+import net.dv8tion.jda.api.hooks.ListenerAdapter;
+import net.whispwriting.BOX;
+import net.whispwriting.servers.Server;
+
+import javax.annotation.Nonnull;
+
+public class RetrieveCommand extends ListenerAdapter {
+
+    @Override
+    public void onGuildMessageReceived(@Nonnull GuildMessageReceivedEvent event) {
+        if (!event.getAuthor().isBot()) {
+            String[] message = event.getMessage().getContentRaw().split(" {2}");
+            if (message[0].equals("b!retrieve")) {
+                if (message.length < 4){
+                    event.getChannel().sendMessage("Not enough arguments.").queue();
+                    event.getChannel().sendMessage("b!retrieve  <box>  <item>  <amount>").queue();
+                    return;
+                }
+                String serverStr = event.getGuild().getId();
+                System.out.println(serverStr);
+                Server server = BOX.servers.get(serverStr);
+                User user = event.getAuthor();
+                Member member = event.getGuild().getMember(user);
+                server.retrieve(message[1], message[2], Integer.parseInt(message[3]), event.getChannel(), member);
+            }
+        }
+    }
+}
