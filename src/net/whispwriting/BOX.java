@@ -22,7 +22,7 @@ public class BOX {
     public static Map<String, Server> servers = new HashMap<>();
 
     public static void main(String[] args) throws LoginException {
-        jda = new JDABuilder(AccountType.BOT).setToken("NjY3MTgwNjc1OTQ1NzI1OTYy.Xh--fA.TmWEnlHRAm9iDG0S3_jYyTLq0ZU").build();
+        jda = new JDABuilder(AccountType.BOT).setToken("").build();
         jda.getPresence().setActivity(Activity.playing("When Robots Ruled the World"));
         jda.addEventListener(new OnServerJoin());
         jda.addEventListener(new AddCommand());
